@@ -1,7 +1,9 @@
 package com.demo.authentication_service.service;
 
+import com.demo.authentication_service.entity.Roles;
 import com.demo.authentication_service.entity.UserCredentialsEntity;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -9,17 +11,21 @@ import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
 
-    public String username;
-    public String password;
+    private String name;
+    private String password;
+    private List<SimpleGrantedAuthority> allRoles;
 
-    public CustomUserDetails(UserCredentialsEntity user) {
-        this.username= user.getName();
-        this.password = user.getPassword();
+    public CustomUserDetails(String name, String password, List<Roles> allRoles) {
+        super();
+        this.name = name;
+        this.password = password;
+        this.allRoles = allRoles.stream().map((role)-> new SimpleGrantedAuthority(role.getRoleName())).toList();
+
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return this.allRoles;
     }
 
     @Override
@@ -29,6 +35,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.name;
     }
 }

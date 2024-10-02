@@ -1,12 +1,10 @@
 package com.demo.authentication_service.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,5 +18,11 @@ public class UserCredentialsEntity {
     private String name;
     private String email;
     private String password;
+
+    @Setter
+    @Getter
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "credential_role", joinColumns = @JoinColumn(name = "cred_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Roles> roles = new ArrayList<>();
 
 }

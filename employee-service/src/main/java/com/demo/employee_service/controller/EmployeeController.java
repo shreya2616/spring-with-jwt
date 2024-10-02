@@ -24,13 +24,13 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/employees")
+    @GetMapping("/user/employees")
     public List<EmployeePojo> getAllEmployee(){
         LOG.info("in getAllEmployee()");
         return employeeService.getAllEmployee();
     }
 
-    @GetMapping("/employees/{id}")
+    @GetMapping("/admin/employees/{id}")
     public EmployeePojo getAEmployee(@PathVariable("id") long employeeId){
         LOG.info("in getAEmployee()");
         return employeeService.getAEmployee(employeeId);

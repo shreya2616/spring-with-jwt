@@ -25,13 +25,13 @@ public class DepartmentController {
         this.deptService = deptService;
     }
 
-    @GetMapping("/departments")
+    @GetMapping("/admin/departments")
     public List<DepartmentPojo> getAllDepartments(){
         LOG.info("in getAllDepartments()");
         return deptService.getAllDepartment();
     }
 
-    @GetMapping("/departments/{id}")
+    @GetMapping("/user/departments/{id}")
     @CircuitBreaker(name = "ciremp", fallbackMethod = "empFallBack")
     public DepartmentPojo getADepartment(@PathVariable("id") long deptId){
         LOG.info("in getADepartments()");

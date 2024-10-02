@@ -16,9 +16,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserCredentialsEntity> user = userCredentialsRepository.findByName(username);
-        System.out.println("user 2: "+user);
-        return user.map(CustomUserDetails::new).orElseThrow(()->new UsernameNotFoundException("Username/password not valid!"));
+        Optional<UserCredentialsEntity> authUser = userCredentialsRepository.findByName(username);
+
+        return authUser.map((user)-> new CustomUserDetails(user.getName(),user.getPassword(),user.getRoles()))
+                .orElseThrow(()->new UsernameNotFoundException(username + " not found"));
 
     }
 }
